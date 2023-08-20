@@ -3,9 +3,6 @@ package com.lixc.rabbitmq.one;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConnectionFactory;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-
 /**
  * com.lixc.rabbitmq.one
  *
