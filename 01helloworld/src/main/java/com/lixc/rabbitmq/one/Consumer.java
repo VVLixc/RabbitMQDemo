@@ -26,7 +26,7 @@ public class Consumer {
         // 推送的消息如何进行消费的接口回调
         DeliverCallback deliverCallback = (String consumerTag, Delivery message) -> {
             String messageBody = new String(message.getBody());//消息分为消息头、消息体；这里获取消息体
-            System.out.println( messageBody);
+            System.out.println(messageBody);
         };
 
         // 取消消费的一个回调接口 如在消费的时候队列被删除掉了
