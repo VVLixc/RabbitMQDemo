@@ -3,10 +3,6 @@ package com.lixc.rabbitmq.util;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConnectionFactory;
 
-import java.io.IOException;
-import java.util.concurrent.TimeoutException;
-
-
 /**
  * com.lixc.rabbitmq.util
  *
@@ -20,7 +16,6 @@ public class RabbitMQUtils {
         connectionFactory.setHost("192.168.222.132");
         connectionFactory.setUsername("lixc");
         connectionFactory.setPassword("001214");
-        Channel channel = connectionFactory.newConnection().createChannel();
-        return channel;
+        return connectionFactory.newConnection().createChannel();
     }
 }
