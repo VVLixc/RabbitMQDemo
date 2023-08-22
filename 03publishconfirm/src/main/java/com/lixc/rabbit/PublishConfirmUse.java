@@ -1,11 +1,9 @@
 package com.lixc.rabbit;
 
-import com.lixc.rabbit.util.RabbitMQUtilsOne;
+import com.lixc.rabbit.util.RabbitMQUtils;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConfirmCallback;
-import com.rabbitmq.client.GetResponse;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentNavigableMap;
@@ -32,7 +30,7 @@ public class PublishConfirmUse {
     }
 
     public static void publishConfirmSingle() throws Exception {
-        Channel channel = RabbitMQUtilsOne.getChannel();
+        Channel channel = RabbitMQUtils.getChannel();
         String queueName = UUID.randomUUID().toString();
         // 开启发布确认
         channel.confirmSelect();
@@ -54,7 +52,7 @@ public class PublishConfirmUse {
     }
 
     public static void publishConfirmBatch() throws Exception {
-        Channel channel = RabbitMQUtilsOne.getChannel();
+        Channel channel = RabbitMQUtils.getChannel();
         String queueName = UUID.randomUUID().toString();
         // 开启发布确认
         channel.confirmSelect();
@@ -78,7 +76,7 @@ public class PublishConfirmUse {
     }
 
     public static void publishConfirmAsync() throws Exception {
-        Channel channel = RabbitMQUtilsOne.getChannel();
+        Channel channel = RabbitMQUtils.getChannel();
         String queueName = UUID.randomUUID().toString();
         // 开启发布确认
         channel.confirmSelect();
@@ -122,7 +120,7 @@ public class PublishConfirmUse {
     }
 
     public static void publishMessageAsync() throws Exception {
-        try (Channel channel = RabbitMQUtilsOne.getChannel()) {
+        try (Channel channel = RabbitMQUtils.getChannel()) {
             String queueName = UUID.randomUUID().toString();
             channel.queueDeclare(queueName, false, false, false, null);
             //开启发布确认

@@ -10,7 +10,7 @@ import com.rabbitmq.client.ConnectionFactory;
  * @version 1.0
  * @since 2023-08-21 17:19
  */
-public class RabbitMQUtilsOne {
+public class RabbitMQUtils {
     public static Channel getChannel() throws Exception {
         ConnectionFactory connectionFactory = new ConnectionFactory();
         connectionFactory.setHost("192.168.222.132");
