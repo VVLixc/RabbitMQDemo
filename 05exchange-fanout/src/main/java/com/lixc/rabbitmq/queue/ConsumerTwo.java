@@ -29,6 +29,5 @@ public class ConsumerTwo {
                 (String consumerTag, Delivery message) ->
                         System.out.println("消费者Two接收的消息：" + new String(message.getBody(), StandardCharsets.UTF_8)),
                 consumerTag -> System.out.println("消费者Two取消消费者接口回调逻辑"));
-
     }
 }
