@@ -26,12 +26,18 @@ public class ConsumerOne {
 
     public static void main(String[] args) throws Exception {
         Channel channel = RabbitMQUtils.getChannel();
+        // 声明普通交换机
         channel.exchangeDeclare(NORMAL_EXCHANGE, BuiltinExchangeType.DIRECT);
+        // 声明死信交换机
         channel.exchangeDeclare(DEAD_EXCHANGE, BuiltinExchangeType.DIRECT);
 
+        // 正常队列绑定死信队列信息
         Map<String, Object> arguments = new HashMap<>();
+        // 设置死信交换机
         arguments.put("x-dead-letter-exchange", DEAD_EXCHANGE);
+        // 设置死信RoutingKey
         arguments.put("x-dead-letter-routing-key", "deadKey");
+        // 死信来源：设置正常队列长度的限制
         //arguments.put("x-max-length", 6);
         channel.queueDeclare(NORMAL_QUEUE, false, false, false, arguments);
         channel.queueDeclare(DEAD_QUEUE, false, false, false, null);
@@ -44,6 +50,7 @@ public class ConsumerOne {
 //                consumerTag -> {
 //                });
 
+        //死信来源：消息拒绝 autoAck参数设置false表示手动应答；basicReject、basicAck方法配合使用
         channel.basicConsume(NORMAL_QUEUE, false,
                 (String consumerTag, Delivery message) -> {
                     String msg = new String(message.getBody(), StandardCharsets.UTF_8);

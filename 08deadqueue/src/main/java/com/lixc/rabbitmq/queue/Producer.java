@@ -21,9 +21,10 @@ public class Producer {
         Channel channel = RabbitMQUtils.getChannel();
         channel.exchangeDeclare(NORMAL_EXCHANGE, BuiltinExchangeType.DIRECT);
 
-        AMQP.BasicProperties props = null;
-                //new AMQP.BasicProperties().builder().expiration("10000").build();
-
+        AMQP.BasicProperties props =
+                null;
+                // 设置消息过期时间10S---死信来源之一：消息TTL过期
+                // new AMQP.BasicProperties().builder().expiration("10000").build();
         for (int i = 0; i < 10; i++) {
             String message = "消息" + i;
             channel.basicPublish(NORMAL_EXCHANGE, "normalKey", props, message.getBytes(StandardCharsets.UTF_8));
