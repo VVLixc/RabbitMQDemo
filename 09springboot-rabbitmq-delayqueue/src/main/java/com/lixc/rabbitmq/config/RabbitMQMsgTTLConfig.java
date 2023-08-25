@@ -18,7 +18,7 @@ import java.util.Map;
  */
 @Slf4j
 @Configuration
-public class RabbitMQConfig {
+public class RabbitMQMsgTTLConfig {
     // 声明普通交换机
     public static final String NORMAL_EXCHANGE = "normal_exchange";
     // 声明死信交换机
@@ -27,12 +27,16 @@ public class RabbitMQConfig {
     public static final String NORMAL_QUEUE_A = "normal_queue_a";
     // 声明普通队列B
     public static final String NORMAL_QUEUE_B = "normal_queue_b";
+    // 声明普通队列C
+    public static final String NORMAL_QUEUE_C = "normal_queue_c";
     // 声明死信队列
     public static final String DEAD_QUEUE = "dead_queue";
     // 声明普通队列A & 普通交换机 之间的路由key/RoutingKey/BindingKey
     public static final String NORMAL_ROUTING_KEY_A = "normal_routing_key_a";
     // 声明普通队列B & 普通交换机 之间的路由key/RoutingKey/BindingKey
     public static final String NORMAL_ROUTING_KEY_B = "normal_routing_key_b";
+    // 声明普通队列B & 普通交换机 之间的路由key/RoutingKey/BindingKey
+    public static final String NORMAL_ROUTING_KEY_C = "normal_routing_key_c";
     // 声明死信队列 & 死信交换机 之间的路由key/RoutingKey/BindingKey
     public static final String DEAD_ROUTING_KEY = "dead_routing_key";
 
@@ -68,6 +72,15 @@ public class RabbitMQConfig {
         return QueueBuilder.durable(NORMAL_QUEUE_B).withArguments(arguments).build();
     }
 
+    // 声明普通队列C
+    @Bean("normalQueueC")
+    public Queue normalQueueC() {
+        HashMap<String, Object> arguments = new HashMap<>();
+        arguments.put("x-dead-letter-exchange", DEAD_EXCHANGE);
+        arguments.put("x-dead-letter-routing-key", DEAD_ROUTING_KEY);
+        return QueueBuilder.durable(NORMAL_QUEUE_C).withArguments(arguments).build();
+    }
+
     // 声明死信队列
     @Bean("deadQueue")
     public Queue deadQueue() {
@@ -83,6 +96,11 @@ public class RabbitMQConfig {
     @Bean
     public Binding normalQueueBAndnormalExchange(@Qualifier("normalQueueB") Queue normalQueueB, @Qualifier("normalExchange") DirectExchange normalExchange) {
         return BindingBuilder.bind(normalQueueB).to(normalExchange).with(NORMAL_ROUTING_KEY_B);
+    }
+
+    @Bean
+    public Binding normalQueueCAndnormalExchange(@Qualifier("normalQueueB") Queue normalQueueB, @Qualifier("normalExchange") DirectExchange normalExchange) {
+        return BindingBuilder.bind(normalQueueB).to(normalExchange).with(NORMAL_ROUTING_KEY_C);
     }
 
     @Bean
